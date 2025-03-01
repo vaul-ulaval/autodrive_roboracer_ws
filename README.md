@@ -1,4 +1,4 @@
-# Autodrive F1tenth Development Environment
+# Autodrive RoboRacer Development Environment
 
 This repository provides a fully configured development environment for the [Autodrive F1tenth Sim Racing competition](https://github.com/AutoDRIVE-Ecosystem/AutoDRIVE-F1TENTH-Sim-Racing/). Using vscode, Docker, and devcontainers, it simplifies the setup process, allowing you to focus on developing and testing your autonomous racing stack.
 
