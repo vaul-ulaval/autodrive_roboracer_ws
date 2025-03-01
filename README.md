@@ -66,7 +66,7 @@ Once all the installation steps are completed, we can move on to the vscode and 
 3. Restart vscode
 4. Once reopened, do Ctrl+Shift+P then `Dev Containers: Reopen in Dev Container`
 5. You should now have a vscode backend running in the container so you should see the ros2 workspace.
-6. Test a colcon build with Ctrl+Shift+b
+6. Test a colcon build with Ctrl+Shift+b (You should always build with this vscode task so you get the `compile_commands.json` for C++ Intelisense)
 7. If everything builds, you are now ready to develop! You can also test a keyboard_teleop for fun
 
 ```bash
