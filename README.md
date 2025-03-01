@@ -39,8 +39,8 @@ First, we need to clone the repository and make sure that the images are buildin
 1. Cloning the repo
 
 ```bash
-git clone git@github.com:vaul-ulaval/autodrive_sim_stack.git --recurse-submodules
-cd autodrive_sim_stack
+git clone https://github.com/vaul-ulaval/autodrive_roboracer_ws --recurse-submodules
+cd autodrive_roboracer_ws
 ```
 
 2. Building and launching the containers
