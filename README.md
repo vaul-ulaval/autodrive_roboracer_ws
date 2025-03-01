@@ -101,6 +101,18 @@ docker push <your-image-name>
 
 5. Great job, you have now submitted your code for the competition!
 
+## Changing Race Track
+
+To change the race track for each competition, you can change the `FROM` directive from the two Dockerfile. For example, if I want to be on the CDC 2024 competition track I do
+
+1. In [devkit.Dockerfile](./devkit.Dockerfile), I change `autodriveecosystem/autodrive_f1tenth_api:2024-cdc-practice` to `autodriveecosystem/autodrive_f1tenth_api:2024-cdc-compete`
+2. In [simulator.Dockerfile](./devkit.Dockerfile), I change `autodriveecosystem/autodrive_f1tenth_sim:2024-cdc-practice` to `autodriveecosystem/autodrive_f1tenth_api:2024-cdc-compete`
+3. Rebuild the images and launch the new containers
+
+```bash
+docker compose up --build -d
+```
+
 ## Contributions
 
 If you have any ideas on how to improve the development environment, feel free to open a Pull Request or a Github Issue. We hope we can make this development environment even better with your help!
