@@ -31,7 +31,7 @@ On devcontainer startup, it installs every vscode extensions, build your code an
 
 Your code runs inside the devkit container with the `src` directory from this repository mounted as a Docker volume. Like the simulator, this container is based on the official [Autodrive F1tenth Devkit Image](https://hub.docker.com/r/autodriveecosystem/autodrive_f1tenth_api).
 
-If your host computer is properly configured, your GPU should also be forwarded to the devkit container, which you can test with this command: `docker exec -it devkit nvidia-smi`.
+If your host computer is properly configured, your GPU should also be forwarded to the devkit container if you uncomment the gpu forwarding in the docker-compose.yml file. You can test the gpu forwarding with this command: `docker exec -it devkit nvidia-smi`.
 
 ## Installation
 

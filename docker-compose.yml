@@ -15,10 +15,10 @@ services:
     volumes:
       - ./.vscode/:/home/autodrive_devkit/.vscode/
       - ./src/:/home/autodrive_devkit/src/
-    gpus:
-      - count: all
-        capabilities:
-          - gpu
+#    gpus:
+#      - count: all
+#        capabilities:
+#          - gpu
   simulator:
     container_name: simulator
     build:
