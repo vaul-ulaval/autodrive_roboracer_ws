@@ -10,6 +10,7 @@ This environment was battle-tested by the VAUL team during the [2nd F1tenth Sim 
 - Docker
 - Docker Compose
 - Foxglove
+- nvidia-container-toolkit (If you want gpu forwarding)
 
 ## Quick Rundown
 
