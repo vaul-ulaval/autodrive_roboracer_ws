@@ -1,29 +1,32 @@
 services:
   devkit:
-    container_name: devkit
+    container_name: $USER-devkit
     build:
       context: .
       dockerfile: devkit.Dockerfile
       target: dev
     ports:
-      - 8765:8765 # Foxglove
-      - 4567:4567 # Simulator
+      - $FOXGLOVE_PORT:8765 # Foxglove
     networks:
       - simulation
     depends_on:
       - simulator
     volumes:
-      - ./.vscode/:/home/autodrive_devkit/.vscode/
-      - ./src/:/home/autodrive_devkit/src/dev_ws
+      - /home/$USER/.vscode/:/home/autodrive_devkit/.vscode/
+      - /home/$USER/dev_ws:/home/autodrive_devkit/src/dev_ws
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
 #    gpus:
 #      - count: all
 #        capabilities:
 #          - gpu
   simulator:
-    container_name: simulator
+    container_name: $USER-simulator
     build:
       context: .
       dockerfile: simulator.Dockerfile
+    environment:
+      - DEVKIT_IP=$USER-devkit
     networks:
       - simulation
 
