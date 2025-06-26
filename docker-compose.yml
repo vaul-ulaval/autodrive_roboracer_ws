@@ -1,3 +1,4 @@
+name: $USER
 services:
   devkit:
     container_name: $USER-devkit
