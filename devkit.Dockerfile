@@ -1,4 +1,10 @@
-FROM autodriveecosystem/autodrive_f1tenth_api:2024-cdc-practice AS dev
+FROM autodriveecosystem/autodrive_roboracer_api:2025-icra-practice AS dev
+
+# Hot patch to fix the ros keyrings from the original container
+RUN sudo apt-key del F42ED6FBAB17C654 && \
+	sudo curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+	echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
+	sudo rm /etc/apt/sources.list.d/ros2-latest.list
 
 RUN sudo apt-get update -y && sudo apt-get install -y \
     screen \
@@ -6,12 +12,6 @@ RUN sudo apt-get update -y && sudo apt-get install -y \
     clangd \ 
     clang-format \
     ros-humble-foxglove-bridge \
-    ros-humble-laser-filters \
-    ros-humble-robot-localization \ 
-    ros-humble-ackermann-msgs \
-    ros-humble-nav2-lifecycle-manager \
-    ros-humble-nav2-map-server \
-    ros-humble-topic-tools \
     nvidia-cuda-toolkit \
     python3-dev \
     python3-pip
@@ -21,18 +21,23 @@ ENV CUDA_HOME=/usr
 ENV PATH="$CUDA_HOME/bin:${PATH}"
 ENV LD_LIBRARY_PATH="$CUDA_HOME/lib64:/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"
 
+RUN rosdep install --from-paths src --ignore-src -r -y
+RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
+
+WORKDIR /home/autodrive_devkit
 COPY devkit-startup.bash devkit-startup.bash
 
 EXPOSE 8765
 EXPOSE 4567
 
-ENTRYPOINT ["/bin/bash", "devkit-startup.bash"]
+ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/devkit-startup.bash"]
 
 FROM dev AS final
-COPY ./src/ /home/autodrive_devkit/src/
+WORKDIR /home/autodrive_devkit
+COPY ./src/ src/
 RUN rosdep install --from-paths src --ignore-src -r -y
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
 
 COPY devkit-startup.bash devkit-startup.bash
 
-ENTRYPOINT ["/bin/bash", "final-startup.bash"]
+ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/final-startup.bash"]

@@ -14,7 +14,7 @@ services:
       - simulator
     volumes:
       - ./.vscode/:/home/autodrive_devkit/.vscode/
-      - ./src/:/home/autodrive_devkit/src/
+      - ./src/:/home/autodrive_devkit/src/dev_ws
 #    gpus:
 #      - count: all
 #        capabilities:

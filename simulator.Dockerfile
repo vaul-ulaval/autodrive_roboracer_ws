@@ -1,4 +1,4 @@
-FROM autodriveecosystem/autodrive_f1tenth_sim:2024-cdc-practice
+FROM autodriveecosystem/autodrive_roboracer_sim:2025-icra-practice
 
 RUN rm /usr/lib/x86_64-linux-gnu/*nvidia* && rm /usr/lib/x86_64-linux-gnu/*cuda*
 

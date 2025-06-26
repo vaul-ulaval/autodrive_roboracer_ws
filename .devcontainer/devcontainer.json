@@ -80,7 +80,7 @@
     }
   },
 
-  "postCreateCommand": "bash -c 'source install/setup.bash && rosdep install --from-paths src --ignore-src -r -y && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1'"
+  "postCreateCommand": "bash -c 'source install/setup.bash && rosdep install --from-paths src --ignore-src -r -y && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1'",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
@@ -95,5 +95,5 @@
   // "shutdownAction": "none",
 
   // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-  // "remoteUser": "devcontainer"
+  // "remoteUser": "autodrive_devkit"
 }
