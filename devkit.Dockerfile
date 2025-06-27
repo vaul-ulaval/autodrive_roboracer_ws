@@ -14,7 +14,9 @@ RUN sudo apt-get update -y && sudo apt-get install -y \
     ros-humble-foxglove-bridge \
     nvidia-cuda-toolkit \
     python3-dev \
-    python3-pip
+    python3-pip \
+    x11-apps \
+    xauth
 
 # Configure CUDA
 ENV CUDA_HOME=/usr

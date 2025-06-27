@@ -15,8 +15,11 @@ services:
     volumes:
       - /home/$USER/.vscode/:/home/autodrive_devkit/.vscode/
       - /home/$USER/dev_ws:/home/autodrive_devkit/src/dev_ws
+      - /home/$USER/.Xauthority:/root/.Xauthority
     environment:
       - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - DISPLAY=$DISPLAY_DOCKER
+      - XAUTHORITY=/root/.Xauthority
 #    gpus:
 #      - count: all
 #        capabilities:
