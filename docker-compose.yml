@@ -28,6 +28,7 @@ services:
       - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
       - DISPLAY=$DISPLAY_DOCKER
       - XAUTHORITY=/home/autodrive_devkit/.Xauthority
+      - FOXGLOVE_PORT=$FOXGLOVE_PORT
 #    gpus:
 #      - count: all
 #        capabilities:
