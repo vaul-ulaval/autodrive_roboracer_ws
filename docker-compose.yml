@@ -1,4 +1,10 @@
 name: $USER
+# TODO:
+# - Add une cronjob pour restart et update le serveur chaque semaine
+# - S'assurer que les logs docker bloat pas le systeme
+# - Symlink /shared_ws dans le home des users
+# - Update la doc et tester sur windows
+
 services:
   devkit:
     container_name: $USER-devkit
@@ -6,6 +12,8 @@ services:
       context: .
       dockerfile: devkit.Dockerfile
       target: dev
+      args:
+        - USER_UID=$UID
     ports:
       - $FOXGLOVE_PORT:8765 # Foxglove
     networks:
@@ -15,11 +23,11 @@ services:
     volumes:
       - /home/$USER/.vscode/:/home/autodrive_devkit/.vscode/
       - /home/$USER/dev_ws:/home/autodrive_devkit/src/dev_ws
-      - /home/$USER/.Xauthority:/root/.Xauthority
+      - /home/$USER/.Xauthority:/home/autodrive_devkit/.Xauthority
     environment:
       - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
       - DISPLAY=$DISPLAY_DOCKER
-      - XAUTHORITY=/root/.Xauthority
+      - XAUTHORITY=/home/autodrive_devkit/.Xauthority
 #    gpus:
 #      - count: all
 #        capabilities:

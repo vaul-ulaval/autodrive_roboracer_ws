@@ -26,6 +26,22 @@ ENV LD_LIBRARY_PATH="$CUDA_HOME/lib64:/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PAT
 RUN rosdep install --from-paths src --ignore-src -r -y
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 
+ARG USER_UID
+ARG USER_GID=$USER_UID
+ARG USERNAME=autodrive_devkit
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && chown $USERNAME /home/autodrive_devkit -R \
+    && cp /root/.bashrc /home/autodrive_devkit/.bashrc
+
+ENV SHELL /bin/bash
+USER $USERNAME:$USERNAME
+
+RUN /bin/bash -c "source /opt/ros/humble/setup.bash && rosdep update"
+
 WORKDIR /home/autodrive_devkit
 COPY devkit-startup.bash devkit-startup.bash
 
