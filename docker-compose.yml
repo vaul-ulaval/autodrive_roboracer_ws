@@ -1,10 +1,4 @@
 name: $USER
-# TODO:
-# - Add une cronjob pour restart et update le serveur chaque semaine
-# - S'assurer que les logs docker bloat pas le systeme
-# - Symlink /shared_ws dans le home des users
-# - Update la doc et tester sur windows
-
 services:
   devkit:
     container_name: $USER-devkit
