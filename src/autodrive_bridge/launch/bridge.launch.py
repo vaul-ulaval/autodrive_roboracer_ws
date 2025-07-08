@@ -17,4 +17,11 @@ def generate_launch_description():
         output="screen",
     )
 
-    return LaunchDescription([ackermann_to_autodrive_node, wheel_odometry_node])
+    static_world_map_tf = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        arguments=["--frame-id", "world", "--child-frame-id", "map"],
+        output="screen",
+    )
+
+    return LaunchDescription([ackermann_to_autodrive_node, wheel_odometry_node, static_world_map_tf])
