@@ -1,26 +1,37 @@
+name: $USER
 services:
   devkit:
-    container_name: devkit
+    container_name: $USER-devkit
     build:
       context: .
       dockerfile: devkit.Dockerfile
       target: final
+      args:
+        - USER_UID=$UID
     ports:
-      - 8765:8765 # Foxglove
-      - 4567:4567 # Simulator
+      - $FOXGLOVE_PORT:8765 # Foxglove
     networks:
       - simulation
     depends_on:
       - simulator
-  #  gpus:
-  #    - count: all
-  #      capabilities:
-  #        - gpu
+    volumes:
+      - /home/$USER/.Xauthority:/home/autodrive_devkit/.Xauthority
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - DISPLAY=$DISPLAY_DOCKER
+      - XAUTHORITY=/home/autodrive_devkit/.Xauthority
+      - FOXGLOVE_PORT=$FOXGLOVE_PORT
+#    gpus:
+#      - count: all
+#        capabilities:
+#          - gpu
   simulator:
-    container_name: simulator
+    container_name: $USER-simulator
     build:
       context: .
       dockerfile: simulator.Dockerfile
+    environment:
+      - DEVKIT_IP=$USER-devkit
     networks:
       - simulation
 
