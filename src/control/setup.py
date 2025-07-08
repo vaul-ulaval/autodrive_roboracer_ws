@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'test_pkg'
+package_name = 'control'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'wall_follow_node = test_pkg.wall_follow_node:main'
+            'wall_follow_node = control.wall_follow_node:main'
         ],
     },
 )

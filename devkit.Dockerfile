@@ -21,10 +21,10 @@ ENV CUDA_HOME=/usr
 ENV PATH="$CUDA_HOME/bin:${PATH}"
 ENV LD_LIBRARY_PATH="$CUDA_HOME/lib64:/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"
 
+WORKDIR /home/autodrive_devkit
 RUN rosdep install --from-paths src --ignore-src -r -y
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 
-WORKDIR /home/autodrive_devkit
 COPY devkit-startup.bash devkit-startup.bash
 
 EXPOSE 8765
@@ -38,6 +38,6 @@ COPY ./src/ src/
 RUN rosdep install --from-paths src --ignore-src -r -y
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
 
-COPY devkit-startup.bash devkit-startup.bash
+COPY devkit-final.bash devkit-final.bash
 
-ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/devkit-startup.bash"]
+ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/devkit-final.bash"]

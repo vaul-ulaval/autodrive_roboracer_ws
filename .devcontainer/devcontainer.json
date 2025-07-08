@@ -20,7 +20,7 @@
       "extensions": [
         // General
         "esbenp.prettier-vscode",
-        "ms-iot.vscode-ros",
+        "ranch-hand-robotics.rde-ros-2",
         "ngtystr.ppm-pgm-viewer-for-vscode",
 
         // Python

@@ -2,9 +2,9 @@ import math
 
 import numpy as np
 import rclpy
+from ackermann_msgs.msg import AckermannDriveStamped
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
-from std_msgs.msg import Float32
 
 # Lab constants
 THETA_DEG = 60
@@ -33,16 +33,15 @@ class WallFollowNode(Node):
 
         self.create_subscription(LaserScan, "autodrive/roboracer_1/lidar", self.lidar_callback, 10)
 
-        self.steering_pub = self.create_publisher(Float32, "autodrive/roboracer_1/steering_command", 10)
-        self.throttle_pub = self.create_publisher(Float32, "autodrive/roboracer_1/throttle_command", 10)
+        self.drive_pub = self.create_publisher(AckermannDriveStamped, "drive", 10)
 
         self.last_time = None
         self.last_steering = 0.0
         self.last_errors_window = np.array([])
 
     def lidar_callback(self, scan: LaserScan):
-        steering = 0.0  # [-1.0, 1.0]
-        throttle = 0.1  # [-1.0, 1.0]
+        steering = 0.0  # rad
+        throttle = 2.2  # m/s
 
         lidar_range_array: list[float] = scan.ranges  # type: ignore
         angle_min = scan.angle_min
@@ -89,17 +88,14 @@ class WallFollowNode(Node):
         self.send_control_command(throttle, steering)
 
     def send_control_command(self, throttle: float, steering: float):
-        clipped_throttle = np.clip(throttle, -1, 1)
-        clipped_steering = np.clip(steering, -1, 1)
+        ackermann_msg = AckermannDriveStamped()
+        ackermann_msg.header.frame_id = "base_link"
+        ackermann_msg.header.stamp = self.get_clock().now().to_msg()
 
-        throttle_msg = Float32()
-        throttle_msg.data = clipped_throttle
+        ackermann_msg.drive.speed = throttle
+        ackermann_msg.drive.steering_angle = steering
 
-        steering_msg = Float32()
-        steering_msg.data = clipped_steering
-
-        self.steering_pub.publish(steering_msg)
-        self.throttle_pub.publish(throttle_msg)
+        self.drive_pub.publish(ackermann_msg)
 
 
 def main(args=None):

@@ -2,8 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "colcon",
-      "args": [
+      "type": "shell",
+      "command": [
+        "colcon",
         "build",
         "--symlink-install",
         "--event-handlers",
@@ -14,9 +15,12 @@
         "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=1"
       ],
-      "problemMatcher": ["$catkin-gcc"],
-      "group": "build",
-      "label": "colcon: build"
+      "problemMatcher": ["$colcon-gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "colcon: Colcon Build Release with compile_commands"
     }
   ]
 }

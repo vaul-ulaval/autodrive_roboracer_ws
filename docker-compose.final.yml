@@ -1,0 +1,29 @@
+services:
+  devkit:
+    container_name: devkit
+    build:
+      context: .
+      dockerfile: devkit.Dockerfile
+      target: final
+    ports:
+      - 8765:8765 # Foxglove
+      - 4567:4567 # Simulator
+    networks:
+      - simulation
+    depends_on:
+      - simulator
+  #  gpus:
+  #    - count: all
+  #      capabilities:
+  #        - gpu
+  simulator:
+    container_name: simulator
+    build:
+      context: .
+      dockerfile: simulator.Dockerfile
+    networks:
+      - simulation
+
+networks:
+  simulation:
+    driver: bridge
