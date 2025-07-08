@@ -1,0 +1,24 @@
+{
+  "python.autoComplete.extraPaths": [
+    "/home/autodrive_devkit/build/control",
+    "/home/autodrive_devkit/install/control/lib/python3.10/site-packages",
+    "/home/autodrive_devkit/build/autodrive_roboracer",
+    "/home/autodrive_devkit/install/autodrive_roboracer/lib/python3.10/site-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "/opt/ros/humble/local/lib/python3.10/dist-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/autodrive_devkit/build/control",
+    "/home/autodrive_devkit/install/control/lib/python3.10/site-packages",
+    "/home/autodrive_devkit/build/autodrive_roboracer",
+    "/home/autodrive_devkit/install/autodrive_roboracer/lib/python3.10/site-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "/opt/ros/humble/local/lib/python3.10/dist-packages"
+  ],
+  "ros.distro": "humble",
+  "clangd.arguments": [
+    "--compile-commands-dir=${workspaceFolder}/build",
+    "--query-driver=/usr/bin/g++",
+    "--log=verbose"
+  ]
+}
