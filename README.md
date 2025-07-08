@@ -78,17 +78,17 @@ ros2 run autodrive_f1tenth teleop_keyboard
 
 For the competitions, teams are required to build and push a docker image running their code. Here is how we do it.
 
-1. Add a GNU screen session that launches your ROS nodes in [devkit-startup.bash](./devkit-startup.bash).
+1. Add a GNU screen session that launches your ROS nodes in [devkit-final.bash](./devkit-final.bash). We have added a basic wall following example that you can test out
 2. Test that your autonomous racing stack actually starts
 
 ```bash
-docker compose up --build -d
+docker compose -f docker-compose.final.yml up --build -d
 ```
 
-3. If it properly starts up, build the final docker image
+3. If it properly starts up, you can retrieve the image that was freshly built
 
 ```bash
-docker build -f devkit.Dockerfile --target final -t <your-image-name> .
+docker images
 ```
 
 3. Push your image to Dockerhub
