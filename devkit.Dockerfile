@@ -40,4 +40,4 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --cmake-args
 
 COPY devkit-startup.bash devkit-startup.bash
 
-ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/final-startup.bash"]
+ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/devkit-startup.bash"]
