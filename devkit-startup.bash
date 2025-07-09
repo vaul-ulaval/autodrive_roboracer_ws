@@ -6,7 +6,7 @@ source /home/autodrive_devkit/install/setup.bash
 screen -wipe > /dev/null 2>&1
 killall screen > /dev/null 2>&1
 
-screen -S foxglove -dm bash -c 'ros2 launch foxglove_bridge foxglove_bridge_launch.xml'
+screen -S foxglove -dm bash -c 'ros2 launch foxglove_bridge foxglove_bridge_launch.xml send_buffer_limit:=1000000000 best_effort_qos_topic_whitelist:=["*"]'
 screen -S devkit -dm bash -c 'ros2 launch autodrive_roboracer bringup_headless.launch.py'
 screen -S autodrive_bridge -dm bash -c 'ros2 launch autodrive_bridge bridge.launch.py'
 

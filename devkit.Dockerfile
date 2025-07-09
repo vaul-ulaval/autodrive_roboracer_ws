@@ -23,6 +23,14 @@ ENV CUDA_HOME=/usr
 ENV PATH="$CUDA_HOME/bin:${PATH}"
 ENV LD_LIBRARY_PATH="$CUDA_HOME/lib64:/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"
 
+# Particle filter
+WORKDIR /libs
+RUN git clone https://github.com/vaul-ulaval/range_libc.git
+RUN cd range_libc && mkdir build && cd build && cmake .. && make && make install
+RUN echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/range_libc.conf && ldconfig
+WORKDIR /home/autodrive_devkit
+RUN rm -rf /libs
+
 WORKDIR /home/autodrive_devkit
 COPY ./src src/autodrive_ws
 COPY ./src/.clangd .
