@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'control'
+package_name = 'reactive_control'
 
 setup(
     name=package_name,
