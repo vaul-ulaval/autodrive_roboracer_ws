@@ -48,6 +48,11 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash && rosdep update"
 
 COPY devkit-startup.bash devkit-startup.bash
 
+ENV MAP_NAME=
+ENV RACELINE_NAME=
+ENV IS_SIM=true
+ENV WORKSPACE_PATH=/home/autodrive_devkit/src/dev_ws/f1tenth_stack
+
 EXPOSE 8765
 EXPOSE 4567
 
