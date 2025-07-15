@@ -30,10 +30,8 @@ public:
       : Node("wheel_odometry", options), x_(0.0), y_(0.0), theta_(0.0),
         speed_(0.0), angular_speed_(0.0), prev_left_position_(0.0),
         prev_right_position_(0.0), prev_time_(this->now()),
-        left_encoder_sub_(this,
-                          "/autodrive/roboracer_1/left_encoder_throttled"),
-        right_encoder_sub_(this,
-                           "/autodrive/roboracer_1/right_encoder_throttled"),
+        left_encoder_sub_(this, "/autodrive/roboracer_1/left_encoder"),
+        right_encoder_sub_(this, "/autodrive/roboracer_1/right_encoder"),
         sync_(MySyncPolicy(20), left_encoder_sub_, right_encoder_sub_) {
     wheel_radius_ =
         this->declare_parameter<double>("wheel_radius", 0.0590); // meters

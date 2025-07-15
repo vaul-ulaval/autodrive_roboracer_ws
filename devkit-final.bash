@@ -11,7 +11,7 @@ screen -S devkit -dm bash -c 'ros2 launch autodrive_roboracer bringup_headless.l
 
 # Autonomy stack goes here
 screen -S autodrive_bridge -dm bash -c 'ros2 launch autodrive_bridge bridge.launch.py'
-screen -S control -dm bash -c 'ros2 run control wall_follow_node'
+screen -S control -dm bash -c 'ros2 run reactive_control wall_follow_node'
 
 echo "Devkit environment ready"
 while true; do sleep 1; done
