@@ -1,7 +1,7 @@
 from sensor_msgs.msg import LaserScan
 import math
 import numpy as np
-from solution import (
+from .solution import (
     sol_apply_pd,
     sol_compute_future_distance_to_wall,
     sol_compute_throttle_command,
@@ -56,6 +56,6 @@ def compute_future_distance_to_wall(a: float, b: float, theta: float, lookahead:
     return sol_compute_future_distance_to_wall(a, b, theta, lookahead)
 
 
-def apply_pd(error: float, kp: float, kd: float, last_error: float, delta_t: float):
+def apply_pd(error: float, kp: float, kd: float, last_error: float, delta_t: float | None):
     # TODO
     return sol_apply_pd(error, kp, kd, last_error, delta_t)

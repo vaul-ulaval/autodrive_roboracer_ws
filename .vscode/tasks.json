@@ -21,6 +21,16 @@
         "isDefault": true
       },
       "label": "colcon: Colcon Build Release with compile_commands"
+    },
+    {
+      "label": "Reset sim",
+      "type": "shell",
+      "command": "/bin/bash",
+      "args": [
+        "-c",
+        "source install/setup.bash && ros2 topic pub /autodrive/reset_command std_msgs/msg/Bool \"{\"data\": true}\" -t 2 && ros2 topic pub /autodrive/roboracer_1/steering_command std_msgs/msg/Float32 \"{\"data\": 0.0}\" -t 2 && ros2 topic pub /autodrive/roboracer_1/throttle_command std_msgs/msg/Float32 \"{\"data\": 0.0}\" -t 2 && ros2 topic pub /autodrive/reset_command std_msgs/msg/Bool \"{\"data\": false}\" -t 2"
+      ],
+      "problemMatcher": []
     }
   ]
 }
