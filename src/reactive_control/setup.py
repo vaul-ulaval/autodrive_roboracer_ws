@@ -19,8 +19,6 @@ setup(
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [
-            'wall_follow_node = reactive_control.wall_follow_node:main'
-        ],
+        "console_scripts": ["wall_follow_node = reactive_control.ros_node:main"],
     },
 )
