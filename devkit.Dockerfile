@@ -64,4 +64,6 @@ ENV WORKSPACE_PATH=/home/autodrive_devkit/src/dev_ws/f1tenth_stack
 EXPOSE 8765
 EXPOSE 4567
 
+RUN ln -s /home/autodrive_devkit/src/autodrive_ws/reactive_control/reactive_control/seminar /home/autodrive_devkit/seminar
+
 ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/devkit-startup.bash"]
