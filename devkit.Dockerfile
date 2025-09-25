@@ -35,7 +35,7 @@ WORKDIR /home/autodrive_devkit
 COPY ./src src/autodrive_ws
 COPY ./src/.clangd .
 
-RUN rosdep install --from-paths src --ignore-src -r -y
+RUN sudo apt-get update -y && rosdep install --from-paths src --ignore-src -r -y
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 
 ARG USER_UID
@@ -52,7 +52,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 ENV SHELL /bin/bash
 USER $USERNAME:$USERNAME
 
-RUN /bin/bash -c "source /opt/ros/humble/setup.bash && rosdep update"
+RUN sudo apt-get update -y && /bin/bash -c "source /opt/ros/humble/setup.bash && rosdep update"
 
 COPY devkit-startup.bash devkit-startup.bash
 
