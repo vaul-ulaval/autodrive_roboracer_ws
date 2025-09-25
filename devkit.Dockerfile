@@ -14,30 +14,54 @@ RUN sudo apt-get update -y && sudo apt-get install -y \
     ros-humble-foxglove-bridge \
     nvidia-cuda-toolkit \
     python3-dev \
-    python3-pip
+    python3-pip \
+    x11-apps \
+    xauth
 
 # Configure CUDA
 ENV CUDA_HOME=/usr
 ENV PATH="$CUDA_HOME/bin:${PATH}"
 ENV LD_LIBRARY_PATH="$CUDA_HOME/lib64:/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"
 
+# Particle filter
+WORKDIR /libs
+RUN git clone https://github.com/vaul-ulaval/range_libc.git
+RUN cd range_libc && mkdir build && cd build && cmake .. && make && make install
+RUN echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/range_libc.conf && ldconfig
 WORKDIR /home/autodrive_devkit
-RUN rosdep install --from-paths src --ignore-src -r -y
+RUN rm -rf /libs
+
+WORKDIR /home/autodrive_devkit
+COPY ./src src/autodrive_ws
+COPY ./src/.clangd .
+
+RUN sudo apt-get update -y && rosdep install --from-paths src --ignore-src -r -y
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 
+ARG USER_UID
+ARG USER_GID=$USER_UID
+ARG USERNAME=autodrive_devkit
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && chown $USERNAME /home/autodrive_devkit -R \
+    && cp /root/.bashrc /home/autodrive_devkit/.bashrc
+
+ENV SHELL /bin/bash
+USER $USERNAME:$USERNAME
+
+RUN sudo apt-get update -y && /bin/bash -c "source /opt/ros/humble/setup.bash && rosdep update"
+
 COPY devkit-startup.bash devkit-startup.bash
+
+ENV MAP_NAME=
+ENV RACELINE_NAME=
+ENV IS_SIM=true
+ENV WORKSPACE_PATH=/home/autodrive_devkit/src/dev_ws/f1tenth_stack
 
 EXPOSE 8765
 EXPOSE 4567
 
 ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/devkit-startup.bash"]
-
-FROM dev AS final
-WORKDIR /home/autodrive_devkit
-COPY ./src/ src/
-RUN rosdep install --from-paths src --ignore-src -r -y
-RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
-
-COPY devkit-final.bash devkit-final.bash
-
-ENTRYPOINT ["/bin/bash", "/home/autodrive_devkit/devkit-final.bash"]
