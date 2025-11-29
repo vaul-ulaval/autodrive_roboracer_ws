@@ -18,6 +18,7 @@ services:
       - /home/$USER/.vscode/:/home/autodrive_devkit/.vscode/
       - /home/$USER/dev_ws:/home/autodrive_devkit/src/dev_ws
       - /home/$USER/.Xauthority:/home/autodrive_devkit/.Xauthority
+      - /mnt/nas/:/mnt/nas/:ro
     environment:
       - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
       - DISPLAY=$DISPLAY_DOCKER

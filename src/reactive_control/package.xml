@@ -10,6 +10,7 @@
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>ackermann_msgs</depend>
+  <depend>rosbag2_storage_mcap</depend>
 
   <export>
     <build_type>ament_python</build_type>

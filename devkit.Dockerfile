@@ -1,10 +1,10 @@
-FROM autodriveecosystem/autodrive_roboracer_api:2025-icra-practice AS dev
+FROM vaul/autodrive_roboracer_api:serge-v2 AS dev
 
-# Hot patch to fix the ros keyrings from the original container
-RUN sudo apt-key del F42ED6FBAB17C654 && \
-	sudo curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-	echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
-	sudo rm /etc/apt/sources.list.d/ros2-latest.list
+# Hot patch to fix the ros keyrings if the original container has outdated keys
+# RUN sudo apt-key del F42ED6FBAB17C654 && \
+# 	sudo curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+# 	echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
+# 	sudo rm /etc/apt/sources.list.d/ros2-latest.list
 
 RUN sudo apt-get update -y && sudo apt-get install -y \
     screen \
