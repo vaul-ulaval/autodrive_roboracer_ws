@@ -25,6 +25,7 @@ ENV LD_LIBRARY_PATH="$CUDA_HOME/lib64:/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PAT
 
 # Particle filter
 WORKDIR /libs
+ENV CUDA_ARCH=87
 RUN git clone https://github.com/vaul-ulaval/range_libc.git
 RUN cd range_libc && mkdir build && cd build && cmake .. && make && make install
 RUN echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/range_libc.conf && ldconfig
